@@ -30,7 +30,7 @@ function App({store}) {
                                 <div className='Item-title'>{item.title}</div>
 
                                 {item.count > 0 && (
-                                    <div className='Item-count'>{`Выделяли ${item.count} раз`}</div>
+                                    <div className='Item-count'>{`| Выделяли ${item.count} раз`}</div>
                                 )}
 
                                 <div className='Item-actions'>

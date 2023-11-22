@@ -37,6 +37,7 @@ body {
 .Item {
   display: flex;
   justify-content: flex-start;
+  align-items: center;
   transition: background-color .3s;
 }
 
@@ -47,14 +48,15 @@ body {
 
 .Item-code {
   padding: 20px 10px 20px 20px;
+  margin-left: 8px;
 }
 
 .Item-title {
-  width: 100%;
+  width: auto;
   padding: 20px 10px;
 }
 
-.Item-count{
+.Item-count {
   display: flex;
   align-items: center;
   min-width: 200px;
@@ -62,6 +64,6 @@ body {
 
 .Item-actions {
   display: flex;
-  justify-content: flex-end;
+  margin-left: auto; 
   padding: 20px 20px 20px 10px;
 }
