@@ -5,6 +5,12 @@ class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
+    this.uniqueCode = this.nextCode(initState.list);
+  }
+
+  //Вычисляю следующий "код"
+  nextCode(list) {
+    return list.reduce((maxCode, item) => Math.max(maxCode, item.code), 0) + 1;
   }
 
   /**
@@ -39,14 +45,28 @@ class Store {
   }
 
   /**
-   * Добавление новой записи
+   * Добавление новой записи (Внёс правки в добавление записи, чтобы оно добавлялось сразу с свойством count и значением выделения(selected))
    */
   addItem() {
+    const newItem = {
+      code: this.generateUniqueCode(),
+      title: 'Новая запись',
+      selected: false,
+      count: 0
+    };
+
     this.setState({
       ...this.state,
-      list: [...this.state.list, {code: this.state.list.length + 1, title: 'Новая запись'}]
-    })
-  };
+      list: [...this.state.list, newItem]
+    });
+  }
+
+  //генерирую уникальный код
+  generateUniqueCode() {
+    const code = this.uniqueCode;
+    this.uniqueCode++;
+    return code;
+  }
 
   /**
    * Удаление записи по коду
@@ -64,16 +84,21 @@ class Store {
    * @param code
    */
   selectItem(code) {
+
     this.setState({
-      ...this.state,
+
       list: this.state.list.map(item => {
-        if (item.code === code) {
-          item.selected = !item.selected;
-        }
-        return item;
+
+        return {
+          ...item,
+          selected: item.code === code ? !item.selected : false,
+          count: item.code === code && !item.selected ? item.count + 1 : item.count
+        };
+
       })
-    })
+    });
   }
+
 }
 
 export default Store;
