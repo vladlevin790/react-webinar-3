@@ -30,8 +30,15 @@ function App({store}) {
                                 <div className='Item-title'>{item.title}</div>
 
                                 {item.count > 0 && (
-                                    <div className='Item-count'>{`| Выделяли ${item.count} раз`}</div>
+                                    <div className='Item-count'>
+                                        {`| Выделяли ${item.count} ${
+                                            (item.count % 100 >= 5 && item.count % 100 <= 20) ||
+                                            (item.count % 10 >= 5 && item.count % 10 <= 9) ||
+                                            item.count % 10 === 0 ? 'раз' : item.count % 10 === 1 ? 'раз' : item.count % 10 <= 4 ? 'раза' : 'раз'
+                                        }`}
+                                    </div>
                                 )}
+
 
                                 <div className='Item-actions'>
                                     <button onClick={() => store.deleteItem(item.code)}>
