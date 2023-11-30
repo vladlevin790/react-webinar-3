@@ -1,0 +1,19 @@
+
+.Cart-money {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.Cart-sum {
+    display: flex;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 21px;
+    padding: 20px 0 89px;
+}
+
+
+.Cart-final-sum {
+    margin: 0 120px 0 53px;
+}

@@ -1,8 +1,12 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import List from "./components/list";
 import Controls from "./components/controls";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
+import Modal from "./components/modal";
+import Cart from "./components/Cart";
+import Item from "./components/item";
+
 
 /**
  * Приложение
@@ -11,31 +15,60 @@ import PageLayout from "./components/page-layout";
  */
 function App({store}) {
 
-  const list = store.getState().list;
+    const [openModal, setOpenModal] = useState(false);
 
-  const callbacks = {
-    onDeleteItem: useCallback((code) => {
-      store.deleteItem(code);
-    }, [store]),
+    const list = store.getState().list;
+    const cart = store.getState().cart;
+    const sumOfItemsInCarts = store.getState().sumOfItemsInCarts;
+    const counter = store.getState().counter;
 
-    onSelectItem: useCallback((code) => {
-      store.selectItem(code);
-    }, [store]),
+    const callbacks = {
 
-    onAddItem: useCallback(() => {
-      store.addItem();
-    }, [store])
-  }
+        addItemToCart: useCallback(
+            (item) => {
+                store.addToCart(item);
+            },
+            [cart]
+        ),
 
-  return (
-    <PageLayout>
-      <Head title='Приложение на чистом JS'/>
-      <Controls onAdd={callbacks.onAddItem}/>
-      <List list={list}
-            onDeleteItem={callbacks.onDeleteItem}
-            onSelectItem={callbacks.onSelectItem}/>
-    </PageLayout>
-  );
+        removeFromCart: useCallback(
+            (item) => {
+                store.removeFromCart(item);
+            },
+            [cart]
+        ),
+
+    };
+
+    return (
+        <PageLayout>
+            <Head title="Магазин" />
+            <Controls
+                caption={"Перейти"}
+                title={"В корзине:"}
+                setOpenModal={setOpenModal}
+                counter={counter}
+                sumOfItemsInCarts={sumOfItemsInCarts}
+            />
+            <List
+                children={list.map((item) => (
+                    <Item item={item} addItemToCart={callbacks.addItemToCart} />
+                ))}
+            />
+            {openModal && (
+                <Modal
+                    children={
+                        <Cart
+                            cart={cart}
+                            setOpenModal={setOpenModal}
+                            sumOfItemsInCarts={sumOfItemsInCarts}
+                            removeFromCart={callbacks.removeFromCart}
+                        />
+                    }
+                />
+            )}
+        </PageLayout>
+    );
 }
 
 export default App;

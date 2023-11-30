@@ -5,5 +5,18 @@
 
 .Head h1 {
   margin: 0;
-  padding: 20px 20px 10px;
+  padding: 20px 0 23px 20px;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 37px;
+}
+
+.Head button {
+  margin: 32px 32px 27px 0;
+}
+
+.Header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 70px;
 }

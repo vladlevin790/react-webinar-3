@@ -41,48 +41,45 @@ class Store {
   }
 
   /**
-   * Добавление новой записи
+   * Добавление товара в корзину.
+   * @param item
    */
-  addItem() {
-    this.setState({
-      ...this.state,
-      list: [...this.state.list, {code: generateCode(), title: 'Новая запись'}]
-    })
-  };
 
-  /**
-   * Удаление записи по коду
-   * @param code
-   */
-  deleteItem(code) {
-    this.setState({
-      ...this.state,
-      // Новый список, в котором не будет удаляемой записи
-      list: this.state.list.filter(item => item.code !== code)
-    })
-  };
+  addToCart(item) {
+    const itemInCart = this.state.cart.find((el) => el.code === item.code);
 
-  /**
-   * Выделение записи по коду
-   * @param code
-   */
-  selectItem(code) {
     this.setState({
       ...this.state,
-      list: this.state.list.map(item => {
-        if (item.code === code) {
-          // Смена выделения и подсчёт
-          return {
-            ...item,
-            selected: !item.selected,
-            count: item.selected ? item.count : item.count + 1 || 1,
-          };
-        }
-        // Сброс выделения если выделена
-        return item.selected ? {...item, selected: false} : item;
-      })
-    })
+
+      cart: itemInCart
+          ? this.state.cart.map((el) => (el.code === item.code ? { ...el, count: el.count + 1 } : el))
+          : [...this.state.cart, { ...item, count: 1 }],
+
+      sumOfItemsInCarts: this.state.sumOfItemsInCarts + (itemInCart ? itemInCart.price : item.price),
+
+      counter: this.state.counter + (itemInCart ? 0 : 1),
+    });
   }
+
+  /**
+   * Удаление товара из корзины.
+   * @param item
+   */
+
+  removeFromCart(item) {
+
+    const delCartItem = this.state.cart.filter((el) => el.code !== item.code);
+    const delSumOfItemsInCarts = this.state.sumOfItemsInCarts - item.count * item.price;
+    const delCounter = this.state.counter - 1;
+
+    this.setState({
+      ...this.state,
+      cart: delCartItem,
+      sumOfItemsInCarts: delSumOfItemsInCarts,
+      counter: delCounter,
+    });
+  }
+
 }
 
 export default Store;
