@@ -5,7 +5,7 @@ import "./style.css";
 function CartItem(props) {
     const callbacks = {
         removeFromCart: () => {
-            props.removeFromCart(props.item);
+            props.removeFromCart(props.item.code);
         },
     };
 
@@ -14,7 +14,7 @@ function CartItem(props) {
             <div className="CartItem-code">{props.item.code}</div>
             <div className="CartItem-title">{props.item.title}</div>
             <div className="CartItem-actions">
-                <span className="CartItem-price">{`${props.item.price} ₽`}</span>
+                <span className="CartItem-price">{`${props.item.price.toLocaleString('ru-RU')} ₽`}</span>
                 <span className="CartItem-count">{`${props.item.count} шт`}</span>
                 <button onClick={callbacks.removeFromCart}>Удалить</button>
             </div>

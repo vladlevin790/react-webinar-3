@@ -7,37 +7,32 @@ import Modal from "./components/modal";
 import Cart from "./components/Cart";
 import Item from "./components/item";
 
-
 /**
  * Приложение
  * @param store {Store} Хранилище состояния приложения
  * @returns {React.ReactElement}
  */
+
 function App({store}) {
-
     const [openModal, setOpenModal] = useState(false);
-
     const list = store.getState().list;
     const cart = store.getState().cart;
     const sumOfItemsInCarts = store.getState().sumOfItemsInCarts;
     const counter = store.getState().counter;
 
     const callbacks = {
-
-        addItemToCart: useCallback(
-            (item) => {
-                store.addToCart(item);
+      addItemToCart: useCallback(
+        (code) => {
+          store.addToCart(code);
+        },
+        [cart]
+      ),
+      removeFromCart: useCallback(
+            (code) => {
+                store.removeFromCart(code);
             },
             [cart]
         ),
-
-        removeFromCart: useCallback(
-            (item) => {
-                store.removeFromCart(item);
-            },
-            [cart]
-        ),
-
     };
 
     return (

@@ -9,7 +9,6 @@ const Cart = (props) => {
     return (
         <div className="Cart">
             <Head Header={"Корзина"} setOpenModal={props.setOpenModal} />
-
             {props.cart.length > 0 ?
                 (<List
                     children={props.cart.map((item) => (
@@ -18,11 +17,10 @@ const Cart = (props) => {
                 />) :
                 (<div></div>)
             }
-
             <div className="Cart-money">
                 <div className="Cart-sum">
                     <span>Итого</span>
-                    <span className="Cart-final-sum">{`${props.sumOfItemsInCarts} ₽`}</span>
+                    <span className="Cart-final-sum">{`${props.sumOfItemsInCarts.toLocaleString('ru-RU')} ₽`}</span>
                 </div>
             </div>
         </div>

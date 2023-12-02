@@ -4,7 +4,6 @@ import "./style.css";
 import { plural } from "../../utils";
 
 function Controls(props) {
-
   return (
     <div className="Controls">
       <span>{props.title}</span>
@@ -14,7 +13,7 @@ function Controls(props) {
               one: "товар",
               few: "товара",
               many: "товаров",
-            })} / ${props.sumOfItemsInCarts} ₽`
+            })} / ${props.sumOfItemsInCarts.toLocaleString('ru-RU')} ₽`
           : "пусто"}
       </span>
       <button onClick={() => props.setOpenModal(true)}>{props.caption}</button>

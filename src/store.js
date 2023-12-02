@@ -45,39 +45,48 @@ class Store {
    * @param item
    */
 
-  addToCart(item) {
-    const itemInCart = this.state.cart.find((el) => el.code === item.code);
+  addToCart(code) {
+    const itemInCart = this.state.cart.find((el) => el.code === code);
+    const item = this.state.list.find((el) => el.code === code);
 
-    this.setState({
-      ...this.state,
-
-      cart: itemInCart
-          ? this.state.cart.map((el) => (el.code === item.code ? { ...el, count: el.count + 1 } : el))
-          : [...this.state.cart, { ...item, count: 1 }],
-
-      sumOfItemsInCarts: this.state.sumOfItemsInCarts + (itemInCart ? itemInCart.price : item.price),
-
-      counter: this.state.counter + (itemInCart ? 0 : 1),
-    });
+    if (itemInCart) {
+      this.setState({
+        ...this.state,
+        cart: this.state.cart.map((el) => (el.code === code ? { ...el, count: el.count + 1 } : el)),
+        sumOfItemsInCarts: this.state.sumOfItemsInCarts + itemInCart.price,
+      });
+    } else if (item) {
+      this.setState({
+        ...this.state,
+        cart: [...this.state.cart, { ...item, count: 1 }],
+        sumOfItemsInCarts: this.state.sumOfItemsInCarts + item.price,
+        counter: this.state.counter + 1,
+      });
+    }
   }
+
+
 
   /**
    * Удаление товара из корзины.
    * @param item
    */
 
-  removeFromCart(item) {
+  removeFromCart(code) {
+    const item = this.state.cart.find((el) => el.code === code);
 
-    const delCartItem = this.state.cart.filter((el) => el.code !== item.code);
-    const delSumOfItemsInCarts = this.state.sumOfItemsInCarts - item.count * item.price;
-    const delCounter = this.state.counter - 1;
+    if (item) {
+      const delCartItem = this.state.cart.filter((el) => el.code !== code);
+      const delSumOfItemsInCarts = this.state.sumOfItemsInCarts - item.count * item.price;
+      const delCounter = this.state.counter - 1;
 
-    this.setState({
-      ...this.state,
-      cart: delCartItem,
-      sumOfItemsInCarts: delSumOfItemsInCarts,
-      counter: delCounter,
-    });
+      this.setState({
+        ...this.state,
+        cart: delCartItem,
+        sumOfItemsInCarts: delSumOfItemsInCarts,
+        counter: delCounter,
+      });
+    }
   }
 
 }
