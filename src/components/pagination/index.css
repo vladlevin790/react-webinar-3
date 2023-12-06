@@ -1,0 +1,37 @@
+.pagination {
+  padding: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pagination-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 20px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.pagination-page.no-link {
+  cursor: default;
+}
+
+.pagination-link {
+  color: black;
+  text-decoration: none;
+}
+
+.pagination-link:hover {
+  text-decoration: underline;
+}
+
+.pagination-page.active {
+  background-color: rgba(0, 135, 233, 1);
+  color: white;
+}
+
+.pagination-page.active .pagination-link {
+  color: white;
+}

@@ -1,31 +1,33 @@
-import {memo, useCallback} from 'react';
-import propTypes from 'prop-types';
-import {numberFormat} from "../../utils";
-import {cn as bem} from "@bem-react/classname";
-import PropTypes from "prop-types";
+import { memo } from 'react';
+import PropTypes from 'prop-types';
+import { numberFormat } from '../../utils';
+import { cn as bem } from '@bem-react/classname';
 import './style.css';
 
-function ItemBasket(props) {
-
+function ItemBasket({ item, onRemove, onClick }) {
   const cn = bem('ItemBasket');
 
-  const callbacks = {
-    onRemove: (e) => props.onRemove(props.item._id)
+  const handleClick = () => {
+    onClick(item._id);
+  };
+
+  const handleRemove = (e) => {
+    e.stopPropagation();
+    onRemove(item._id);
   };
 
   return (
-    <div className={cn()}>
-      {/*<div className={cn('code')}>{props.item._id}</div>*/}
-      <div className={cn('title')}>{props.item.title}</div>
+    <div className={cn()} onClick={handleClick}>
+      <div className={cn('title')}>{item.title}</div>
       <div className={cn('right')}>
-        <div className={cn('cell')}>{numberFormat(props.item.price)} ₽</div>
-        <div className={cn('cell')}>{numberFormat(props.item.amount || 0)} шт</div>
+        <div className={cn('cell')}>{numberFormat(item.price)} ₽</div>
+        <div className={cn('cell')}>{numberFormat(item.amount || 0)} шт</div>
         <div className={cn('cell')}>
-          <button onClick={callbacks.onRemove}>Удалить</button>
+          <button onClick={handleRemove}>Удалить</button>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 ItemBasket.propTypes = {
@@ -33,13 +35,15 @@ ItemBasket.propTypes = {
     _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     title: PropTypes.string,
     price: PropTypes.number,
-    amount: PropTypes.number
+    amount: PropTypes.number,
   }).isRequired,
-  onRemove: propTypes.func,
-}
+  onRemove: PropTypes.func,
+  onClick: PropTypes.func,
+};
 
 ItemBasket.defaultProps = {
   onRemove: () => {},
-}
+  onClick: () => {},
+};
 
 export default memo(ItemBasket);

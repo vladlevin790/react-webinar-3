@@ -1,0 +1,30 @@
+.products {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  flex-grow: 0;
+  gap: 20px;
+  padding: 40px;
+  font-size: 18px;
+  line-height: 21px;
+}
+
+.products * {
+  margin: 0;
+  padding: 0;
+}
+
+.products-category-value,
+.products-country-value,
+.products-price,
+.products-year-value {
+  font-weight: 700;
+}
+
+.products-price{
+  font-size: 24px;
+}
+
+.products-button {
+  padding: 2px 9px;
+}
